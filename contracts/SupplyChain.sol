@@ -40,7 +40,7 @@ contract SupplyChain {
     uint price;
     State state;
     address seller;
-    address buyer;
+    address payable buyer;
   }
 
   /* Create 4 events with the same name as each possible State (see above)
@@ -59,7 +59,7 @@ contract SupplyChain {
 
   modifier paidEnough(uint _sku) { require(msg.value >= items[_sku].price); _;}
   
-  modifier checkValue(uint _sku) {
+  modifier checkValue (uint _sku)  {
     //refund them after pay for item (why it is before, _ checks for logic before func)
     _;
     uint _price = items[_sku].price;

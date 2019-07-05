@@ -39,7 +39,7 @@ contract SupplyChain {
     uint sku;
     uint price;
     State state;
-    address seller;
+    address payable seller;
     address payable buyer;
   }
 
@@ -62,9 +62,9 @@ contract SupplyChain {
   modifier checkValue (uint _sku)  {
     //refund them after pay for item (why it is before, _ checks for logic before func)
     _;
-    uint _price = items[_sku].price;
-    uint amountToRefund = msg.value - _price;
+    uint amountToRefund = msg.value - items[_sku].price;
     items[_sku].buyer.transfer(amountToRefund);
+    items[_sku].seller.transfer(items[_sku].price);
   }
 
   modifier checkIsSeller(uint _sku){

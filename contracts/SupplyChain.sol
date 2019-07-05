@@ -85,23 +85,25 @@ contract SupplyChain {
    Hint: What item properties will be non-zero when an Item has been added?
    */
   modifier forSale(uint sku) {
-    _;
     require (
       items[sku].state == State.ForSale &&
       items[sku].buyer == address(0)
     , "Item not yet for sale");
+    _;
   }
   modifier sold(uint sku) {
+    require (items[sku].state == State.Sold, "Item not yet sold");    
     _;
-    require (items[sku].state == State.Sold, "Item not yet sold");
   }
   modifier shipped(uint sku) {
     _;
     require (items[sku].state == State.Shipped, "Item not yet shipped");
+    _;
   }
   modifier received(uint sku) {
     _;
     require (items[sku].state == State.Received, "Item not yet for received");
+    _;
   }
 
 
